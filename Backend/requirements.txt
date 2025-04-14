@@ -1,0 +1,7 @@
+requests
+pandas
+opencage
+geopy
+fpdf2==2.7.8
+# Remove the older `fpdf` if present
+reportlab==3.6.12

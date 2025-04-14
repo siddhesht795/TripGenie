@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Planner with Gen AI</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body onload="checkAuthStatus()">
+  <header>
+    <div class="logo">TripGenie</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="dropdown">
+            <a href="#" class="auth-btn" onclick="toggleDropdown(event)">Account ▼</a>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="auth/signin.html">Sign In</a>
+            <a href="auth/signup.html">Sign Up</a>
+            <a href="#" onclick="logout()" id="logout-btn" style="display: none;">Logout</a>
+          </div>
+        </li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Your Next Journey, Optimized</h2>
+    <p>Build, personalize, and optimize your itineraries with our AI trip planner.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Enter Starting Location" name="source" class="source-input">
+      <input type="text" placeholder="Enter Destination" name="destination" class="destination-input">
+      <input type="date" id="start-date">
+      <input type="date" id="end-date">
+      <select name="travelStyle" class="source-input">
+        <option value="" disabled selected>Travel Style</option>
+        <option value="relaxation">Relaxation</option>
+        <option value="family">Family-Friendly</option>
+        <option value="adventure">Outdoors & Adventure</option>
+        <option value="cultural">Cultural and Historical</option>
+        <option value="romantic">Romantic for Couples</option>
+      </select>
+    </div>
+    <div class="button-group">
+        <button class="primary-button" id="getSuggestions" onclick="getSuggestions()">Get Suggestions ✨</button>
+        <div id="output" class="generated-itinerary"></div>
+    </div>
+  </section>
+
+  <section class="ai-suggestions">
+    <h2 class="section-title">Your AI-Powered Trip</h2>
+    <div class="cards-container">
+      <div class="card">
+        <h3>Personalized Suggestions</h3>
+        <img src="images/per2.jpg" alt="personalised recommendations">
+        <p>Get AI-driven trip recommendations tailored to your preferences.</p>
+      </div>
+      <div class="card">
+        <h3>Best Travel Routes</h3>
+        <img src="images/travel2.jpeg" alt="travel routes">
+        <p>Optimize your journey with the best routes and time-saving tips.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="places-to-visit">
+    <h2 class="section-title">Recommended Places to Visit</h2>
+    <div class="cards-container">
+      <div class="trending-card">
+        <img src="images/paris1.jpeg" alt="Paris">
+        <div class="capsules">
+          <span>Eiffel Tower</span>
+          <span>Lights</span>
+        </div>
+        <div class="content">
+          <h1>Paris</h1>
+          <p>A beautiful city known for its rich culture, architecture, and cuisine.</p>
+        </div>
+      </div>
+
+      <div class="trending-card">
+        <img src="images/london.jpeg" alt="London">
+        <div class="capsules">
+          <span>Big Ben</span>
+          <span>River Thames</span>
+        </div>
+        <div class="content">
+          <h1>London</h1>
+          <p>Explore history, culture, and vibrant life in England's capital.</p>
+        </div>
+      </div>
+
+      <div class="trending-card">
+        <img src="images/new york.jpeg" alt="New York">
+        <div class="capsules">
+          <span>Times Square</span>
+          <span>Skyscrapers</span>
+        </div>
+        <div class="content">
+          <h1>New York</h1>
+          <p>The city that never sleeps! Experience Broadway, Central Park, and more.</p>
+        </div>
+      </div>
+
+      <div class="trending-card">
+        <img src="images/tokyo.jpeg" alt="Tokyo">
+        <div class="capsules">
+          <span>Shibuya</span>
+          <span>Cherry Blossoms</span>
+        </div>
+        <div class="content">
+          <h1>Tokyo</h1>
+          <p>Tokyo blends tradition with futuristic city life and tech wonders.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="social-media">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="contact-info">
+      <p>Email: info@tripgenie.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById('dropdownMenu');
+    dropdown.classList.toggle('show');
+}
+    function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('show');
+    }
+
+    // Authentication Status Check
+    function checkAuthStatus() {
+      const currentUser = localStorage.getItem('currentUser');
+      const logoutBtn = document.getElementById('logout-btn');
+      if (currentUser) {
+        logoutBtn.style.display = 'block';
+      } else {
+        logoutBtn.style.display = 'none';
+      }
+    }
+
+    // Logout Function
+    function logout() {
+      localStorage.removeItem('currentUser');
+      alert('Logged out successfully');
+      window.location.reload();
+    }
+
+    function getSuggestions() {
+  const source = document.querySelector('.source-input').value;
+  const destination = document.querySelector('.destination-input').value;
+  const style = document.querySelector('select[name="travelStyle"]').value;
+  const startDate = document.getElementById('start-date').value;
+  const endDate = document.getElementById('end-date').value;
+
+  if (!source || !destination || !style || !startDate || !endDate) {
+    alert('Please fill in all fields to get suggestions!');
+    return;
+  }
+
+  const currentUser = localStorage.getItem('currentUser');
+  if (!currentUser) {
+    alert('Please sign in to get AI suggestions!');
+    window.location.href = 'auth/signin.html';
+  } else {
+    // Optional: Store trip data
+    localStorage.setItem('tripData', JSON.stringify({ source, destination, style, startDate, endDate }));
+    // Redirect to itinerary page
+    window.location.href = 'itenary.html';
+  }
+}
+
+</script>
+
+</body>
+
+</html>
