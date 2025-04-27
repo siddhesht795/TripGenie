@@ -1,28 +1,43 @@
-import requests
+import os
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+# Load environment variables
+load_dotenv()
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_weather_details(destination, outbound_date, return_date):
-    url = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
+    """
+    Get weather forecast for a destination using Google's Gemini AI.
+    Returns formatted weather information suitable for an itinerary.
+    """
+    # Initialize the model
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    
+    # Create a detailed prompt
+    prompt = f"""
+    You are a travel weather assistant. Provide a detailed weather forecast for {destination} 
+    between {outbound_date} and {return_date}. Include:
 
-    headers = {
-        "Authorization": "Bearer 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"
-    }
+    1. Typical weather conditions for this period (temperature ranges, precipitation)
+    2. Recommended clothing/packing suggestions
+    3. Any seasonal considerations (monsoon, extreme heat, etc.)
+    4. Special weather-related travel tips
 
-    input_string = f'''How will the weather be when the user is visiting {destination} during {outbound_date} and {return_date}? Please give an assumption of how the weather will be during that time based on previous years. Provide this information in a format suitable for an itinerary under the suitable clothes and weather conditions section.'''
-
-    data = {
-        "inputs": input_string
-    }
-
+    Just give a paragraph of about 50-60 words and see to it that it contains all the information mentioned above
+    I want to put it in a pdf so there must not be any unnecessary * or any other symbols
+    """
+    
     try:
-        response = requests.post(url, headers=headers, json=data)
-
-        if response.status_code == 200:
-            result = response.json()
-            weather_details = result[0]["generated_text"][len(input_string):].lstrip()
-            return weather_details
+        # Generate the weather forecast
+        response = model.generate_content(prompt)
+        
+        if response.candidates and response.candidates[0].content.parts:
+            weather_details = response.candidates[0].content.parts[0].text
+            return weather_details.strip()
         else:
-            print("Error fetching weather details:", response.status_code, response.text)
-            return "Sorry, we couldn't fetch the weather details at the moment."
-    except requests.exceptions.RequestException as e:
-        print(f"❌ Request failed: {e}")
-        return "Sorry, we couldn't fetch the weather details due to a request error."
+            return "Could not generate weather forecast. Please check back later."
+            
+    except Exception as e:
+        print(f"❌ Weather forecast request failed: {e}")
+        return "Weather forecast unavailable at this time."

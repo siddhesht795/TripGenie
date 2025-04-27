@@ -1,6 +1,6 @@
 from datetime import datetime
 
-def generate_itinerary(user_trip_details, flights, hotels, weather_details):
+def generate_itinerary(user_trip_details, flights, hotels, weather_details, daywise_activities):
     itinerary = []
 
     # Trip Overview
@@ -56,6 +56,24 @@ def generate_itinerary(user_trip_details, flights, hotels, weather_details):
     itinerary.append(f"🍴 Try the local cuisine and street food.")
     itinerary.append(f"🛍️ Visit popular shopping areas for souvenirs.")
     itinerary.append("\n" + "🎊" * 25)
+
+    # Day-wise Activities
+    itinerary.append("🗓️ **Day-wise Itinerary with Activities:**")
+    if daywise_activities:
+        for day in daywise_activities:
+            itinerary.append(f"📅 **{day['date']}:**")
+            for activity in day["activities"]:
+                if isinstance(activity, dict):  # Handle structured activity data
+                    itinerary.append(f"  🏛️ **{activity['name']}**")
+                    itinerary.append(f"    📖 {activity['description']}")
+                    itinerary.append(f"    🕒 Best Time to Visit: {activity['best_time_to_visit']}")
+                    itinerary.append(f"    🛋️ Rest Period: {activity['rest_period']}")
+                else:  # Handle plain text activity data (e.g., rest days)
+                    itinerary.append(f"  {activity}")
+            itinerary.append("-" * 50)
+    else:
+        itinerary.append("❌ No activities found for the selected dates.")
+    itinerary.append("\n" + "🌟" * 25)
 
     # Return the complete itinerary as a formatted string
     return "\n".join(itinerary)

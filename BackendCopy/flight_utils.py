@@ -1,6 +1,21 @@
 import requests
 from config import SERP_API_KEY
 
+# Convert minutes to "X hrs Y mins" format
+def convert_minutes_to_hr_min(mins):
+    try:
+        mins = int(mins)
+        hours = mins // 60
+        minutes = mins % 60
+        parts = []
+        if hours > 0:
+            parts.append(f"{hours} hr{'s' if hours != 1 else ''}")
+        if minutes > 0:
+            parts.append(f"{minutes} min{'s' if minutes != 1 else ''}")
+        return ' '.join(parts) if parts else "0 mins"
+    except:
+        return str(mins) + " mins"
+
 def get_flight_data(user_trip_details):
     params = {
         "engine": "google_flights",
@@ -27,7 +42,7 @@ def get_flight_data(user_trip_details):
             for flight in data["best_flights"][:5]:
                 flight_details = {
                     "price": flight.get("price", "N/A"),
-                    "total_duration": flight.get("total_duration", "N/A"),
+                    "total_duration": convert_minutes_to_hr_min(flight.get("total_duration", 0)),
                     "flights": [],
                     "layovers": []
                 }
@@ -40,13 +55,13 @@ def get_flight_data(user_trip_details):
                         "departure_time": leg.get("departure_airport", {}).get("time", "N/A"),
                         "arrival_airport": leg.get("arrival_airport", {}).get("name", "N/A"),
                         "arrival_time": leg.get("arrival_airport", {}).get("time", "N/A"),
-                        "duration": leg.get("duration", "N/A")
+                        "duration": convert_minutes_to_hr_min(leg.get("duration", 0))
                     })
 
                 for layover in flight.get("layovers", []):
                     flight_details["layovers"].append({
                         "name": layover.get("name", "Unknown"),
-                        "duration": layover.get("duration", "Unknown")
+                        "duration": convert_minutes_to_hr_min(layover.get("duration", 0))
                     })
 
                 flights_data.append(flight_details)

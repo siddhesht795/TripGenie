@@ -5,7 +5,24 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit
 from datetime import datetime
 
-def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, weather_summary):
+def draw_wrapped_text(pdf, text, x, y, width):
+    """
+    Wraps and draws text within the specified width.
+    """
+    lines = simpleSplit(text, pdf._fontObj, pdf._fontSize, width)
+    for line in lines:
+        if y < 50:  # Check if there's enough space on the page
+            pdf.showPage()
+            pdf.setFont("Symbola", 12)
+            y = letter[1] - 50
+        pdf.drawString(x, y, line)
+        y -= pdf._leading
+    return y
+
+def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, weather_summary, daywise_activities):
+    """
+    Generates a PDF itinerary based on the provided details.
+    """
     # Register font for emojis and symbols
     pdfmetrics.registerFont(TTFont("Symbola", "fonts/Symbola.ttf"))
 
@@ -63,7 +80,7 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
 
     # Flight Details
     write_title("✈️ Flights")
-    if flight_details:
+    if (flight_details):
         for i, flight in enumerate(flight_details, 1):
             write_lines(f"Flight Option {i}:", indent=0)
             write_lines(f"Price: {flight['price']}, Duration: {flight['total_duration']}", indent=16)
@@ -96,14 +113,30 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
     write_lines(weather_summary)
     y -= section_spacing
 
-    # Day-wise Itinerary
-    write_title("🗓️ Daily Itinerary")
-    num_days = (datetime.strptime(user_trip_details['return_date'], "%Y-%m-%d") - 
-                datetime.strptime(user_trip_details['outbound_date'], "%Y-%m-%d")).days
-    for day in range(1, num_days + 1):
-        write_lines(f"Day {day}: Explore {user_trip_details['destination_city']}", indent=0)
-        write_lines("Suggested Activities: Visit famous landmarks, try local cuisine, shop around.", indent=16)
-        y -= line_height
+    # Day-wise Itinerary with Activities
+    write_title("🗓️ Day-wise Itinerary with Activities")
+    if daywise_activities:
+        for day in daywise_activities:
+            # Add a distinct header for each day
+            write_title(f"📅 {day['date']}")
+            if day.get("is_rest_day", False):
+                # Highlight rest days
+                write_lines("🛌 Rest Day: Take time to relax and recharge.", indent=16)
+            else:
+                for activity in day["activities"]:
+                    if isinstance(activity, dict):  # Handle structured activity data
+                        write_lines(f"  🏛️ {activity['name']}", indent=16)
+                        write_lines(f"    📖 Description: {activity['description']}", indent=32)
+                        write_lines(f"    🕒 Best Time to Visit: {activity['best_time_to_visit']}", indent=32)
+                        write_lines(f"    🛋️ Rest Period: {activity['rest_period']}", indent=32)
+                        y -= line_height  # Add spacing between activities
+                    else:  # Handle plain text activity data
+                        write_lines(f"  {activity}", indent=16)
+            y -= section_spacing  # Add spacing between days
+    else:
+        write_lines("❌ No activities found for the selected dates.")
+    y -= section_spacing
 
+    # Save PDF
     pdf.save()
     return filename
