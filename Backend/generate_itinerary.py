@@ -3,15 +3,11 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit
-from datetime import datetime
 
 def draw_wrapped_text(pdf, text, x, y, width):
-    """
-    Wraps and draws text within the specified width.
-    """
-    lines = simpleSplit(text, pdf._fontObj, pdf._fontSize, width)
+    lines = simpleSplit(text, pdf._fontname, pdf._fontsize, width)
     for line in lines:
-        if y < 50:  # Check if there's enough space on the page
+        if y < 50:  # Bottom margin
             pdf.showPage()
             pdf.setFont("Symbola", 12)
             y = letter[1] - 50
@@ -20,17 +16,14 @@ def draw_wrapped_text(pdf, text, x, y, width):
     return y
 
 def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, weather_summary, daywise_activities):
-    """
-    Generates a PDF itinerary based on the provided details.
-    """
-    # Register font for emojis and symbols
+    # Register font
     pdfmetrics.registerFont(TTFont("Symbola", "fonts/Symbola.ttf"))
 
     filename = f"{user_trip_details['destination_city']}_itinerary.pdf"
     pdf = canvas.Canvas(filename, pagesize=letter)
     width, height = letter
 
-    # Layout settings
+    # Layout
     margin = 50
     y = height - margin
     max_width = width - 2 * margin
@@ -57,7 +50,7 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
         pdf.drawString(margin, y, title)
         y -= line_height
         pdf.setFont("Symbola", font_text)
-        y -= 4  # slight padding
+        y -= 4  # Small padding
 
     def write_lines(text, indent=0):
         nonlocal y
@@ -67,7 +60,7 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
             pdf.drawString(margin + indent, y, line)
             y -= line_height
 
-    # ---------- Document Start ----------
+    # Document Start
     pdf.setFont("Symbola", font_title + 4)
     title = f"🌍 Trip Itinerary to {user_trip_details['destination_city']}"
     pdf.drawCentredString(width / 2, y, title)
@@ -80,14 +73,14 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
 
     # Flight Details
     write_title("✈️ Flights")
-    if (flight_details):
+    if flight_details:
         for i, flight in enumerate(flight_details, 1):
             write_lines(f"Flight Option {i}:", indent=0)
             write_lines(f"Price: {flight['price']}, Duration: {flight['total_duration']}", indent=16)
             for f in flight["flights"]:
                 flight_info = f"{f['airline']} {f['flight_number']} | {f['departure_airport']} → {f['arrival_airport']} | Duration: {f['duration']}"
                 write_lines(flight_info, indent=32)
-            if flight["layovers"]:
+            if flight.get("layovers"):
                 write_lines("Layovers:", indent=32)
                 for layover in flight["layovers"]:
                     layover_info = f"{layover['name']} | Duration: {layover['duration']}"
@@ -102,7 +95,8 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
     if hotel_details:
         for hotel in hotel_details:
             write_lines(f"{hotel['name']} - {hotel['price']}", indent=0)
-            write_lines(f"Amenities: {', '.join(hotel['amenities'])}", indent=16)
+            if hotel.get('amenities'):
+                write_lines(f"Amenities: {', '.join(hotel['amenities'])}", indent=16)
             y -= line_height
     else:
         write_lines("No hotel details available.")
@@ -113,28 +107,40 @@ def generate_itinerary_pdf(user_trip_details, flight_details, hotel_details, wea
     write_lines(weather_summary)
     y -= section_spacing
 
-    # Day-wise Itinerary with Activities
+    # Day-wise Itinerary
     write_title("🗓️ Day-wise Itinerary with Activities")
     if daywise_activities:
         for day in daywise_activities:
-            # Add a distinct header for each day
-            write_title(f"📅 {day['date']}")
-            if day.get("is_rest_day", False):
-                # Highlight rest days
-                write_lines("🛌 Rest Day: Take time to relax and recharge.", indent=16)
+            day_date = day.get('date', 'Day')
+            check_page_space(2)
+            # Always print a header for every day
+            pdf.setFont("Symbola", font_title)
+            pdf.drawString(margin, y, f"📅 {day_date}")
+            y -= line_height
+            pdf.setFont("Symbola", font_text)
+            y -= 4
+
+            activities = day.get('activities', [])
+            if day.get('is_rest_day', False):
+                write_lines("🛌 Rest Day: Take time to relax.", indent=16)
+            elif activities:
+                for activity in activities:
+                    if isinstance(activity, dict):
+                        write_lines(f"🏛️ {activity.get('name', '')}", indent=16)
+                        if activity.get('description'):
+                            write_lines(f"📖 {activity['description']}", indent=32)
+                        if activity.get('best_time_to_visit'):
+                            write_lines(f"🕒 Best Time: {activity['best_time_to_visit']}", indent=32)
+                        if activity.get('rest_period'):
+                            write_lines(f"🛋️ Rest Period: {activity['rest_period']}", indent=32)
+                        y -= line_height
+                    elif isinstance(activity, str):
+                        write_lines(f"{activity}", indent=16)
             else:
-                for activity in day["activities"]:
-                    if isinstance(activity, dict):  # Handle structured activity data
-                        write_lines(f"  🏛️ {activity['name']}", indent=16)
-                        write_lines(f"    📖 Description: {activity['description']}", indent=32)
-                        write_lines(f"    🕒 Best Time to Visit: {activity['best_time_to_visit']}", indent=32)
-                        write_lines(f"    🛋️ Rest Period: {activity['rest_period']}", indent=32)
-                        y -= line_height  # Add spacing between activities
-                    else:  # Handle plain text activity data
-                        write_lines(f"  {activity}", indent=16)
-            y -= section_spacing  # Add spacing between days
+                write_lines("No activities found for this day.", indent=16)
+            y -= section_spacing
     else:
-        write_lines("❌ No activities found for the selected dates.")
+        write_lines("❌ No activities found.")
     y -= section_spacing
 
     # Save PDF

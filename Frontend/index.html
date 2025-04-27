@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Planner with Gen AI</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 </head>
 
 <body onload="checkAuthStatus()">
@@ -17,7 +19,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#contact">Contact</a></li>
         <li class="dropdown">
-            <a href="#" class="auth-btn" onclick="toggleDropdown(event)">Account ▼</a>
+          <a href="#" class="auth-btn" onclick="toggleDropdown(event)">Account ▼</a>
           <div class="dropdown-menu" id="dropdownMenu">
             <a href="auth/signin.html">Sign In</a>
             <a href="auth/signup.html">Sign Up</a>
@@ -33,22 +35,21 @@
     <h2>Your Next Journey, Optimized</h2>
     <p>Build, personalize, and optimize your itineraries with our AI trip planner.</p>
     <div class="search-bar">
-      <input type="text" placeholder="Enter Starting Location" name="source" class="source-input">
-      <input type="text" placeholder="Enter Destination" name="destination" class="destination-input">
+      <input type="text" placeholder="From which place" name="source" class="source-input">
+      <input type="text" placeholder="To which destination" name="destination" class="destination-input">
+      <input type="number" placeholder="Number of days" name="days" class="days-input" min="1">
       <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <select name="travelStyle" class="source-input">
-        <option value="" disabled selected>Travel Style</option>
-        <option value="relaxation">Relaxation</option>
-        <option value="family">Family-Friendly</option>
-        <option value="adventure">Outdoors & Adventure</option>
-        <option value="cultural">Cultural and Historical</option>
-        <option value="romantic">Romantic for Couples</option>
-      </select>
+      <input type="number" placeholder="Number of adults" name="adults" class="adults-input" min="1">
+      <input type="number" placeholder="Number of children" name="children" class="children-input" min="0"
+        onchange="toggleChildAgeInputs()">
+      <div id="child-age-container" style="display: none;">
+        <label for="child-ages">Enter age of each child:</label>
+        <input type="text" id="child-ages" placeholder="E.g., 5, 8, 12">
+      </div>
     </div>
     <div class="button-group">
-        <button class="primary-button" id="getSuggestions" onclick="getSuggestions()">Get Suggestions ✨</button>
-        <div id="output" class="generated-itinerary"></div>
+      <button class="primary-button" id="getSuggestions" onclick="getSuggestions()">Get Suggestions ✨</button>
+      <div id="output" class="generated-itinerary"></div>
     </div>
   </section>
 
@@ -137,14 +138,39 @@
     </div>
   </footer>
 
+  <div id="loadingModal" class="modal">
+    <div class="modal-content">
+      <div class="loader"></div>
+      <h3>Planning Your Perfect Trip</h3>
+      <div class="status-container">
+        <div class="status-item" id="flightStatus">
+          <span class="status-icon">✈️</span>
+          <span class="status-text">Searching flights...</span>
+        </div>
+        <div class="status-item" id="hotelStatus">
+          <span class="status-icon">🏨</span>
+          <span class="status-text">Finding hotels...</span>
+        </div>
+        <div class="status-item" id="weatherStatus">
+          <span class="status-icon">🌤️</span>
+          <span class="status-text">Checking weather...</span>
+        </div>
+        <div class="status-item" id="activityStatus">
+          <span class="status-icon">🎯</span>
+          <span class="status-text">Planning activities...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     function toggleDropdown(event) {
-    event.preventDefault();
-    const dropdown = document.getElementById('dropdownMenu');
-    dropdown.classList.toggle('show');
-}
+      event.preventDefault();
+      const dropdown = document.getElementById('dropdownMenu');
+      dropdown.classList.toggle('show');
+    }
     function toggleMenu() {
-    document.querySelector('.nav-links').classList.toggle('show');
+      document.querySelector('.nav-links').classList.toggle('show');
     }
 
     // Authentication Status Check
@@ -165,31 +191,89 @@
       window.location.reload();
     }
 
-    function getSuggestions() {
-  const source = document.querySelector('.source-input').value;
-  const destination = document.querySelector('.destination-input').value;
-  const style = document.querySelector('select[name="travelStyle"]').value;
-  const startDate = document.getElementById('start-date').value;
-  const endDate = document.getElementById('end-date').value;
+    function toggleChildAgeInputs() {
+      const childrenCount = document.querySelector('.children-input').value;
+      const childAgeContainer = document.getElementById('child-age-container');
+      if (childrenCount > 0) {
+        childAgeContainer.style.display = 'block';
+      } else {
+        childAgeContainer.style.display = 'none';
+      }
+    }
 
-  if (!source || !destination || !style || !startDate || !endDate) {
-    alert('Please fill in all fields to get suggestions!');
-    return;
-  }
+    async function getSuggestions() {
+      const source = document.querySelector('.source-input').value;
+      const destination = document.querySelector('.destination-input').value;
+      const days = document.querySelector('.days-input').value;
+      const startDate = document.getElementById('start-date').value;
+      const adults = document.querySelector('.adults-input').value;
+      const children = document.querySelector('.children-input').value;
+      const childAges = document.getElementById('child-ages').value;
 
-  const currentUser = localStorage.getItem('currentUser');
-  if (!currentUser) {
-    alert('Please sign in to get AI suggestions!');
-    window.location.href = 'auth/signin.html';
-  } else {
-    // Optional: Store trip data
-    localStorage.setItem('tripData', JSON.stringify({ source, destination, style, startDate, endDate }));
-    // Redirect to itinerary page
-    window.location.href = 'itenary.html';
-  }
-}
+      if (!source || !destination || !days || !startDate || !adults || (children > 0 && !childAges)) {
+        alert('Please fill in all fields to get suggestions!');
+        return;
+      }
 
-</script>
+      const loadingModal = document.getElementById('loadingModal');
+      loadingModal.style.display = 'block';
+
+      // Function to update status
+      function updateStatus(stage, isComplete = false) {
+        const statusElement = document.getElementById(`${stage}Status`);
+        if (statusElement) {
+          statusElement.classList.toggle('completed', isComplete);
+          if (isComplete) {
+            statusElement.querySelector('.status-icon').textContent += ' ✓';
+          }
+        }
+      }
+
+      const tripData = {
+        source,
+        destination,
+        days,
+        startDate,
+        adults,
+        children,
+        childAges: children > 0 ? childAges.split(',').map(age => age.trim()) : []
+      };
+
+      try {
+        // Show initial loading state
+        updateStatus('flight');
+
+        const response = await fetch('http://localhost:5000/api/trip', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(tripData)
+        });
+
+        // Simulate status updates (you can modify timing based on actual backend progress)
+        setTimeout(() => updateStatus('flight', true), 1000);
+        setTimeout(() => updateStatus('hotel', true), 2000);
+        setTimeout(() => updateStatus('weather', true), 3000);
+        setTimeout(() => updateStatus('activity', true), 4000);
+
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('itineraryData', JSON.stringify(data));
+          setTimeout(() => {
+            window.location.href = 'itinerary.html';
+          }, 5000); // Give time to see all completion marks
+        } else {
+          loadingModal.style.display = 'none';
+          alert('Failed to fetch trip suggestions. Please try again.');
+        }
+      } catch (error) {
+        loadingModal.style.display = 'none';
+        console.error('Error fetching trip suggestions:', error);
+        alert('An error occurred. Please try again.');
+      }
+    }
+  </script>
 
 </body>
 

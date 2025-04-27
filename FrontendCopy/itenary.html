@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripGenie - AI Travel Planner</title>
+  <link rel="stylesheet" href="itenary.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .nav-links { display: none; }
+    .nav-links.active { display: block; }
+    .saved-item { background-color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+    .saved-item button { margin-right: 10px; }
+    pre { white-space: pre-wrap; }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">TripGenie</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" onclick="toggleDropdown(event)">Account ▼</a>
+          <div class="dropdown-menu" id="dropdownMenu">
+            <a href="auth/signin.html">Sign In</a>
+            <a href="auth/signup.html">Sign Up</a>
+          </div>
+        </li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+  </header>
+
+  <!-- Flight Search -->
+  <section class="card flight-card">
+    <div class="card-header" onclick="toggleFlightCard()">
+      <h3><i class="fa-solid fa-plane-departure"></i> Find Flights <span id="flightArrow">▼</span></h3>
+    </div>
+    <div class="flight-content">
+      <label>From</label>
+      <input type="text" id="from" placeholder="Enter departure city">
+      <label>To</label>
+      <input type="text" id="to" placeholder="Enter destination city">
+      <div class="trip-type">
+        <label><input type="radio" name="trip" value="roundtrip"> Roundtrip</label>
+        <label><input type="radio" name="trip" value="oneway" checked> One-way</label>
+      </div>
+      <div class="dates">
+        <div><label>Depart</label><input type="date" id="depart"></div>
+        <div><label>Return</label><input type="date" id="return" disabled></div>
+      </div>
+      <button class="primary-button" type="button">Search Flights ✈️</button>
+    </div>
+  </section>
+
+  <!-- AI Itinerary Section -->
+  <section class="itinerary">
+    <h2>Your AI-Generated Itinerary</h2>
+    <div id="itinerary-list"></div>
+    <div class="button-group">
+      <button class="primary-button" onclick="addDay()">Add Day</button>
+      <button onclick="saveItinerary()">Save</button>
+      <button class="secondary-button" onclick="shareItinerary()">Share</button>
+    </div>
+  </section>
+
+  <!-- Hotel Card -->
+  <section class="hotel-card">
+    <div class="hotel-info">
+      <span class="hotel-icon">🏨</span>
+      <div>
+        <h3>Find Hotels</h3>
+        <p>Ensure a restful night at family-friendly hotels.</p>
+      </div>
+    </div>
+    <button class="primary-button" type="button">Find Hotels ➔</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-media">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="contact-info">
+      <p>Email: info@tripgenie.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </footer>
+  
+  <script>
+    // Add AI Suggested Day
+    window.addDay = () => {
+      const list = document.getElementById('itinerary-list');
+      const day = document.createElement('div');
+      day.innerHTML = `<p>Day ${list.children.length + 1}: [AI Suggested Plan]</p>`;
+      list.appendChild(day);
+    };
+    // Toggle Functions
+    window.toggleFlightCard = () => {
+      const card = document.querySelector('.flight-card');
+      const arrow = document.getElementById('flightArrow');
+      card.classList.toggle('open');
+      arrow.classList.toggle('rotate');
+    };
+
+    window.toggleDropdown = (e) => {
+      e.preventDefault();
+      document.getElementById('dropdownMenu').classList.toggle('show');
+    };
+
+    window.toggleMenu = () => {
+      document.querySelector('.nav-links').classList.toggle('active');
+    };
+
+    // Enable Return Date on Roundtrip
+    const tripRadios = document.querySelectorAll('input[name="trip"]');
+    const returnInput = document.getElementById('return');
+    tripRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        returnInput.disabled = !(radio.value === 'roundtrip' && radio.checked);
+      });
+    });
+    // Load Trip Data from LocalStorage and Generate AI Itinerary
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tripData = JSON.parse(localStorage.getItem('tripData'));
+      if (!tripData) {
+        alert("No trip data found! Redirecting...");
+        window.location.href = "index.html";
+        return;
+      }
+      await generateItinerary(tripData.destination, 3); // Dynamic days if needed
+    });
+  </script>
+</body>
+
+</html>

@@ -1,907 +1,1404 @@
 /* ==========================================================================
    1. Reset & Base Styles - with improved variables
    ========================================================================== */
-   :root {
-    /* Color Variables */
-    --primary-color: #4361ee;
-    --primary-dark: #3a56d4;
-    --secondary-color: #ff7b54;
-    --secondary-dark: #e86a45;
-    --accent-color: #4cc9f0;
-    --text-primary: #2b2d42;
-    --text-secondary: #555b6e;
-    --light-bg: #f8f9fa;
-    --card-bg: #ffffff;
-    --dark-bg: #2b2d42;
-    --success: #4ade80;
-    --warning: #fbbf24;
-    --danger: #ef4444;
-    
-    /* Typography */
-    --heading-font: 'Montserrat', sans-serif;
-    --body-font: 'Poppins', sans-serif;
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 4rem;
-    
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 16px;
-    --radius-full: 9999px;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --shadow-hover: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: var(--light-bg);
-    color: var(--text-primary);
-    line-height: 1.7;
-    font-family: var(--body-font);
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--heading-font);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
-  }
-  
-  a {
-    text-decoration: none;
-    color: var(--primary-color);
-    transition: all 0.3s ease;
-  }
-  
-  a:hover {
-    color: var(--primary-dark);
-  }
-  
-  button {
-    cursor: pointer;
-    font-family: var(--body-font);
-  }
-  
-  /* ==========================================================================
+:root {
+  /* Color Variables */
+  --primary-color: #4361ee;
+  --primary-dark: #3a56d4;
+  --secondary-color: #ff7b54;
+  --secondary-dark: #e86a45;
+  --accent-color: #4cc9f0;
+  --text-primary: #2b2d42;
+  --text-secondary: #555b6e;
+  --light-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --dark-bg: #2b2d42;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+
+  /* Typography */
+  --heading-font: 'Montserrat', sans-serif;
+  --body-font: 'Poppins', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--light-bg);
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-family: var(--body-font);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--body-font);
+}
+
+/* ==========================================================================
      2. Header & Navigation - modernized design
      ========================================================================== */
-  header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: var(--spacing-md) var(--spacing-lg);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow-md);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .logo {
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: white;
-    font-family: var(--heading-font);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-  
-  .logo:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-  }
-  
-  nav .nav-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-  }
-  
-  .nav-links a {
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    padding: var(--spacing-sm) 0;
-  }
-  
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    transition: width 0.3s ease;
-  }
-  
-  .nav-links a:hover {
-    color: white;
-  }
-  
-  .nav-links a:hover::after {
-    width: 100%;
-  }
-  
-  .hamburger {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
-  }
-  
-  /* Dropdown Navigation - enhanced */
-  .dropdown {
-    position: relative;
-  }
-  
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    background: var(--card-bg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    top: 40px;
-    right: 0;
-    min-width: 180px;
-    overflow: hidden;
-    transform-origin: top right;
-    transform: scale(0.95);
-    opacity: 0;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    z-index: 100;
-  }
-  
-  .dropdown-menu a {
-    display: block;
-    padding: var(--spacing-md);
-    color: var(--text-primary);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-  }
-  
-  .dropdown-menu a:last-child {
-    border-bottom: none;
-  }
-  
-  .dropdown-menu a:hover {
-    background-color: rgba(0,0,0,0.03);
-    padding-left: calc(var(--spacing-md) + 5px);
-    color: var(--primary-color);
-  }
-  
-  .dropdown-menu.active,
-  .dropdown-menu.show {
-    display: block;
-    transform: scale(1);
-    opacity: 1;
-  }
-  
-  /* ==========================================================================
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: white;
+  font-family: var(--heading-font);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+nav .nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.nav-links a {
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: var(--spacing-sm) 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+/* Dropdown Navigation - enhanced */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  top: 40px;
+  right: 0;
+  min-width: 180px;
+  overflow: hidden;
+  transform-origin: top right;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  z-index: 100;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: var(--spacing-md);
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding-left: calc(var(--spacing-md) + 5px);
+  color: var(--primary-color);
+}
+
+.dropdown-menu.active,
+.dropdown-menu.show {
+  display: block;
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
      3. Hero Section - dramatic improvement
      ========================================================================== */
-  .hero {
-    position: relative;
-    color: white;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    text-align: center;
-    z-index: 1;
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://freerangestock.com/sample/56642/airplane-wing-flying-over-mountain-range.jpg') center/cover no-repeat;
-    filter: blur(5px) brightness(0.7);
-    z-index: -1;
-  }
-  
-  .hero::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
-  
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    animation: fadeInUp 1s ease-out;
-  }
-  
-  .hero h2 {
-    font-family: var(--heading-font);
-    text-align: center;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    font-size: 4rem;
-    margin-bottom: var(--spacing-md);
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    line-height: 1.1;
-  }
-  
-  .hero p {
-    font-size: 1.4rem;
-    margin-bottom: var(--spacing-lg);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* ==========================================================================
-     4. Card Components - enhanced visual appeal
-     ========================================================================== */
-  /* General Card Containers */
-  .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-lg);
-    justify-content: center;
-    padding: var(--spacing-lg);
-    animation: fadeIn 1s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  .trending-container {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
-    flex-wrap: wrap;
-  }
-  
-  /* Base Card Styles */
-  .card {
-    background: var(--card-bg);
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    width: 300px;
-    text-align: center;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 0;
-    background-color: var(--primary-color);
-    transition: height 0.3s ease;
-  }
-  
-  .card:hover::before {
-    height: 100%;
-  }
-  
-  .cards-container .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.5s ease;
-  }
-  
-  .cards-container .card img:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  /* Trending Card Styles */
-  .trending-card {
-    background-color: var(--card-bg);
-    width: 320px;
-    height: 400px;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-  
-  .trending-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-hover);
-  }
-  
-  .trending-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: all 0.5s ease;
-  }
-  
-  .trending-card:hover img {
-    transform: scale(1.1);
-  }
-  
-  .content {
-    padding: var(--spacing-md) var(--spacing-lg);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  }
-  
-  .content h1 {
-    margin: var(--spacing-sm) 0;
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    transition: color 0.3s ease;
-  }
-  
-  .trending-card:hover .content h1 {
-    color: var(--primary-color);
-  }
-  
-  .content p {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-height: 1.6;
-  }
-  
-  /* Tag Capsules */
-  .capsules {
-    display: flex;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-sm);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .capsules span {
-    border: none;
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-full);
-    font-size: 0.75rem;
-    background-color: rgba(67, 97, 238, 0.1);
-    color: var(--primary-color);
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .capsules span:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
-  }
-  
-  /* ==========================================================================
-     5. Buttons & Interactive Elements - stylish modern buttons
-     ========================================================================== */
-  /* Regular Button */
-  .button {
-    color: white;
-    font-size: 1rem;
-    background-color: var(--secondary-color);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    padding: 1rem 2rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    z-index: 2;
-    display: inline-block;
-  }
-  
-  .button:hover {
-    background-color: var(--secondary-dark);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .button:active {
-    transform: translateY(1px);
-  }
-  
-  .button::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
+.hero {
+  position: relative;
+  color: white;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+  z-index: 1;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://freerangestock.com/sample/56642/airplane-wing-flying-over-mountain-range.jpg') center/cover no-repeat;
+  filter: blur(5px) brightness(0.7);
+  z-index: -1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero h2 {
+  font-family: var(--heading-font);
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+}
+
+.hero p {
+  font-size: 1.4rem;
+  margin-bottom: var(--spacing-lg);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes fadeInUp {
+  from {
     opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
+    transform: translateY(20px);
   }
-  
-  .button:focus:not(:active)::after {
-    animation: ripple 1s ease-out;
-  }
-  
-  @keyframes ripple {
-    0% {
-      transform: scale(0, 0);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(20, 20);
-      opacity: 0;
-    }
-  }
-  
-  /* Primary Button */
-  .primary-button {
-    background: var(--primary-color);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .primary-button:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  /* Secondary Button */
-  .secondary-button {
-    background: var(--success);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .secondary-button:hover {
-    background: #3ca56e;
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  .button-group {
-    text-align: center;
-    margin-top: var(--spacing-lg);
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  /* ==========================================================================
-     6. Search & Input - enhanced search experience
-     ========================================================================== */
-  .search-bar {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--spacing-lg);
-  }
-  
-  .search-bar input, 
-  .search-bar button, 
-  .search-bar select {
-    border-radius: var(--radius-md);
-    border: 2px solid transparent;
-    font-family: var(--body-font);
-    background-color: white;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    flex: 1;
-    min-width: 120px;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .search-bar input {
-    flex: 3;
-    min-width: 250px;
-  }
-  
-  .search-bar input:focus, 
-  .search-bar select:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
-  }
-  
-  .search-bar select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-  }
-  
-  .search-bar button {
-    background-color: var(--primary-color);
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-    flex: 0 0 auto;
-  }
-  
-  .search-bar button:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  /* ==========================================================================
-     7. Content Sections - improved spacing and organization
-     ========================================================================== */
-  .section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: var(--spacing-lg);
-    color: var(--text-primary);
-    position: relative;
-    padding-bottom: var(--spacing-md);
-  }
-  
-  .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: var(--radius-full);
-  }
-  
-  .ai-suggestions, 
-  .places-to-visit, 
-  .flights, 
-  .prices, 
-  .itinerary {
-    font-family: var(--body-font);
-    padding: var(--spacing-xl) var(--spacing-lg);
-    text-align: center;
-    background-color: var(--light-bg);
-  }
-  
-  .ai-suggestions:nth-child(even), 
-  .places-to-visit:nth-child(even), 
-  .flights:nth-child(even), 
-  .prices:nth-child(even), 
-  .itinerary:nth-child(even) {
-    background-color: white;
-  }
-  
-  .ai-suggestions h2, 
-  .places-to-visit h2, 
-  .flights h2, 
-  .prices h2, 
-  .itinerary h2 {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-lg);
-    color: var(--text-primary);
-  }
-  
-  .info-box {
-    background: white;
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    margin: var(--spacing-md) auto;
-    width: 80%;
-    max-width: 800px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .info-box:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .info-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-  }
-  
-  /* ==========================================================================
-     8. Footer - enhanced visual style
-     ========================================================================== */
-  footer {
-    background-color: var(--dark-bg);
-    color: white;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    text-align: center;
-  }
-  
-  footer .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-lg);
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: left;
-  }
-  
-  footer h3 {
-    font-size: 1.5rem;
-    margin-bottom: var(--spacing-md);
-    color: white;
-    position: relative;
-    padding-bottom: var(--spacing-sm);
-  }
-  
-  footer h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 3px;
-    background: var(--secondary-color);
-  }
-  
-  footer .social-media, 
-  footer .contact-info, 
-  footer .legal {
-    margin-bottom: var(--spacing-md);
-  }
-  
-  footer .social-icons {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-sm);
-  }
-  
-  footer .social-icons a {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-  }
-  
-  footer .social-icons a:hover {
-    background: var(--primary-color);
-    transform: translateY(-3px);
-  }
-  
-  footer a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    margin: 0;
-    transition: all 0.3s ease;
-    display: inline-block;
-    padding: var(--spacing-xs) 0;
-  }
-  
-  footer a:hover {
-    color: white;
-    transform: translateX(3px);
-  }
-  
-  footer .copyright {
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-  }
-  
-  /* ==========================================================================
-     9. Media Queries - improved responsive design
-     ========================================================================== */
-  @media screen and (max-width: 768px) {
-    :root {
-      --spacing-lg: 1.5rem;
-      --spacing-xl: 3rem;
-    }
-    
-    .hero h2 {
-      font-size: 2.5rem;
-    }
-    
-    .hero p {
-      font-size: 1.1rem;
-    }
-    
-    .nav-links {
-      display: none;
-      flex-direction: column;
-      background: var(--primary-color);
-      position: absolute;
-      top: 70px;
-      right: 0;
-      width: 250px;
-      padding: var(--spacing-md);
-      box-shadow: var(--shadow-lg);
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-      z-index: 100;
-    }
-    
-    .nav-links.active {
-      display: flex;
-    }
-    
-    .nav-links a {
-      padding: var(--spacing-md) 0;
-    }
-    
-    .hamburger {
-      display: block;
-    }
-    
-    .card, .trending-card {
-      width: 100%;
-      max-width: 350px;
-    }
-    
-    .search-bar {
-      flex-direction: column;
-    }
-    
-    .search-bar input, 
-    .search-bar select {
-      width: 100%;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .hero h2 {
-      font-size: 2rem;
-    }
-    
-    .section-title {
-      font-size: 2rem;
-    }
-    
-    .info-box {
-      width: 95%;
-    }
-  }
-  
-  /* ==========================================================================
-     10. Animations & Effects - Adding life to the page
-     ========================================================================== */
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-  
-  .float-animation {
-    animation: float 4s ease-in-out infinite;
-  }
-  
-  .highlight-text {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .highlight-text::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    background-color: rgba(76, 201, 240, 0.3);
-    z-index: -1;
-    transition: height 0.3s ease;
-  }
-  
-  .highlight-text:hover::after {
-    height: 100%;
-  }
-  
-  /* Gradient text effect */
-  .gradient-text {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
-  
-  /* Add this to HTML elements */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-  }
-  
-  .reveal.active {
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ==========================================================================
+     4. Card Components - enhanced visual appeal
+     ========================================================================== */
+/* General Card Containers */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  padding: var(--spacing-lg);
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.trending-container {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+/* Base Card Styles */
+.card {
+  background: var(--card-bg);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 300px;
+  text-align: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 0;
+  background-color: var(--primary-color);
+  transition: height 0.3s ease;
+}
+
+.card:hover::before {
+  height: 100%;
+}
+
+.cards-container .card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.5s ease;
+}
+
+.cards-container .card img:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Trending Card Styles */
+.trending-card {
+  background-color: var(--card-bg);
+  width: 320px;
+  height: 400px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.trending-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+}
+
+.trending-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+.trending-card:hover img {
+  transform: scale(1.1);
+}
+
+.content {
+  padding: var(--spacing-md) var(--spacing-lg);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.content h1 {
+  margin: var(--spacing-sm) 0;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.trending-card:hover .content h1 {
+  color: var(--primary-color);
+}
+
+.content p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.6;
+}
+
+/* Tag Capsules */
+.capsules {
+  display: flex;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.capsules span {
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-color);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.capsules span:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+     5. Buttons & Interactive Elements - stylish modern buttons
+     ========================================================================== */
+/* Regular Button */
+.button {
+  color: white;
+  font-size: 1rem;
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  z-index: 2;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: var(--secondary-dark);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.button:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+/* Primary Button */
+.primary-button {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Secondary Button */
+.secondary-button {
+  background: var(--success);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary-button:hover {
+  background: #3ca56e;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.button-group {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+     6. Search & Input - enhanced search experience
+     ========================================================================== */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.search-bar input,
+.search-bar button,
+.search-bar select {
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  font-family: var(--body-font);
+  background-color: white;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 120px;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-bar input {
+  flex: 3;
+  min-width: 250px;
+}
+
+.search-bar input:focus,
+.search-bar select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+}
+
+.search-bar select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.search-bar button {
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+.search-bar button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+     7. Content Sections - improved spacing and organization
+     ========================================================================== */
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary);
+  position: relative;
+  padding-bottom: var(--spacing-md);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: var(--radius-full);
+}
+
+.ai-suggestions,
+.places-to-visit,
+.flights,
+.prices,
+.itinerary {
+  font-family: var(--body-font);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+  background-color: var(--light-bg);
+}
+
+.ai-suggestions:nth-child(even),
+.places-to-visit:nth-child(even),
+.flights:nth-child(even),
+.prices:nth-child(even),
+.itinerary:nth-child(even) {
+  background-color: white;
+}
+
+.ai-suggestions h2,
+.places-to-visit h2,
+.flights h2,
+.prices h2,
+.itinerary h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-lg);
+  color: var (--text-primary);
+}
+
+.info-box {
+  background: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin: var(--spacing-md) auto;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.info-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+}
+
+/* ==========================================================================
+     8. Footer - enhanced visual style
+     ========================================================================== */
+footer {
+  background-color: var(--dark-bg);
+  color: white;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+}
+
+footer .footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+footer h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-md);
+  color: white;
+  position: relative;
+  padding-bottom: var(--spacing-sm);
+}
+
+footer h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--secondary-color);
+}
+
+footer .social-media,
+footer .contact-info,
+footer .legal {
+  margin-bottom: var(--spacing-md);
+}
+
+footer .social-icons {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+footer .social-icons a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+footer .social-icons a:hover {
+  background: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  margin: 0;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: var(--spacing-xs) 0;
+}
+
+footer a:hover {
+  color: white;
+  transform: translateX(3px);
+}
+
+footer .copyright {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+     9. Media Queries - improved responsive design
+     ========================================================================== */
+@media screen and (max-width: 768px) {
+  :root {
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 3rem;
+  }
+
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: var(--primary-color);
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 250px;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    z-index: 100;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: var(--spacing-md) 0;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .card,
+  .trending-card {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar input,
+  .search-bar select {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .info-box {
+    width: 95%;
+  }
+}
+
+/* ==========================================================================
+     10. Animations & Effects - Adding life to the page
+     ========================================================================== */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+.highlight-text {
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-text::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-color: rgba(76, 201, 240, 0.3);
+  z-index: -1;
+  transition: height 0.3s ease;
+}
+
+.highlight-text:hover::after {
+  height: 100%;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Add this to HTML elements */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  color: #333;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.status-container {
+  margin-top: 2rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.status-item.completed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+  width: 30px;
+}
+
+.status-text {
+  flex: 1;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#loadingStatus {
+  margin-top: 15px;
+  color: #666;
+}
+
+/* Itinerary Page Styles */
+.itinerary-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.accordion-container {
+  margin: 2rem 0;
+}
+
+.accordion-item {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: white;
+}
+
+/* Cards Styling */
+.flight-card,
+.hotel-card,
+.weather-card,
+.activity-card {
+  background: white;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.flight-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.hotel-card {
+  display: flex;
+  gap: 1rem;
+}
+
+.hotel-card img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.weather-card {
+  text-align: center;
+  padding: 1rem;
+}
+
+.activity-card {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.download-pdf {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.download-pdf:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hotel-card {
+    flex-direction: column;
+  }
+
+  .hotel-card img {
+    width: 100%;
+  }
+
+  .flight-details {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Flight Timeline */
+.flight-timeline {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.flight-path {
+  flex: 1;
+  position: relative;
+  border-top: 2px solid #ddd;
+  margin: 0 20px;
+}
+
+.layovers {
+  position: absolute;
+  top: -10px;
+  width: 100%;
+  text-align: center;
+}
+
+.layover {
+  display: inline-block;
+  background: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid #ddd;
+  font-size: 0.8rem;
+}
+
+/* Hotel Filters */
+.hotel-filters {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#priceRange {
+  width: 200px;
+}
+
+/* Weather Grid */
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+/* Activities Timeline */
+.activities-timeline {
+  position: relative;
+  padding: 20px;
+}
+
+.day-section {
+  border-left: 2px solid #007bff;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+.activity-card {
+  position: relative;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+.activity-card::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: #007bff;
+  border-radius: 50%;
+}
+
+/* Weather Forecast Styles */
+.weather-forecast {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.weather-day {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.weather-day:hover {
+  transform: translateY(-5px);
+}
+
+.weather-icon {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.weather-temps {
+  margin: 0.5rem 0;
+}
+
+.high-temp {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.low-temp {
+  color: #4dabf7;
+}
+
+.temp-separator {
+  margin: 0 0.5rem;
+  color: #adb5bd;
+}
+
+/* Activities Styles */
+.activities-timeline {
+  padding: 1rem;
+}
+
+.day-block {
+  margin-bottom: 2rem;
+  border-left: 3px solid #4dabf7;
+  padding-left: 1.5rem;
+}
+
+.day-header {
+  margin-bottom: 1rem;
+}
+
+.day-header h3 {
+  color: #4dabf7;
+  margin: 0;
+}
+
+.day-date {
+  color: #868e96;
+  font-size: 0.9rem;
+}
+
+.activity-item {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.activity-time {
+  color: #4dabf7;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.activity-content h4 {
+  margin: 0;
+  color: #343a40;
+}
+
+.activity-location,
+.activity-duration {
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+  font-size: 0.9rem;
+  color: #868e96;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .weather-forecast {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .activity-item {
+    margin-left: 0;
+  }
+}
+
+/* Flights Section */
+.flights-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flight-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1 1 calc(50% - 1rem);
+  max-width: calc(50% - 1rem);
+}
+
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.flight-timeline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.layovers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.layover {
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.weather-forecast {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.weather-day {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.weather-date {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.weather-icon {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.weather-temps {
+  margin: 0.5rem 0;
+}
+
+.high-temp {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.low-temp {
+  color: #4dabf7;
+}
+
+.temp-separator {
+  margin: 0 0.5rem;
+  color: #adb5bd;
+}
+
+.weather-condition {
+  margin-top: 0.5rem;
+  color: #555;
+}
+
+.weather-wind,
+.weather-precip {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 0.2rem;
+}
