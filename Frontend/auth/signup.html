@@ -4,78 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign Up - TripGenie</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #43e97b, #38f9d7);
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: #ffffff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      width: 350px;
-      text-align: center;
-    }
-
-    h2 {
-      margin-bottom: 25px;
-      color: #333;
-    }
-
-    input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    button {
-      width: 95%;
-      padding: 12px;
-      background-color: #43e97b;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #38f9d7;
-    }
-
-    .link {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .link a {
-      color: #43e97b;
-      text-decoration: none;
-    }
-
-    .link a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/signup.css">
 </head>
 
 <body>
   <div class="container">
     <h2>Sign Up</h2>
-    <input type="text" id="signup-username" placeholder="Username">
-    <input type="password" id="signup-password" placeholder="Password">
+    <div class="form-row">
+      <div class="form-group half">
+        <input type="text" id="signup-firstname" placeholder="First Name" required>
+      </div>
+      <div class="form-group half">
+        <input type="text" id="signup-lastname" placeholder="Last Name" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="email" id="signup-email" placeholder="Email Address" required>
+    </div>
+    <div class="form-group">
+      <input type="tel" id="signup-phone" placeholder="Phone Number" required>
+    </div>
+    <div class="form-group">
+      <input type="text" id="signup-username" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+      <input type="password" id="signup-password" placeholder="Password" required>
+    </div>
     <button onclick="signup()">Sign Up</button>
 
     <div class="link">
@@ -83,19 +37,56 @@
     </div>
   </div>
 
+  <!-- Add Modal HTML -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modal-title"></h3>
+      <p class="modal-message" id="modal-message"></p>
+      <button class="modal-button" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
   <script>
+    function showModal(title, message, type = 'success') {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modal.classList.add('show', type);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show', 'success', 'error');
+      if (modal.dataset.redirect) {
+        window.location.href = modal.dataset.redirect;
+      }
+    }
+
     function signup() {
+      const firstname = document.getElementById('signup-firstname').value;
+      const lastname = document.getElementById('signup-lastname').value;
+      const email = document.getElementById('signup-email').value;
+      const phone = document.getElementById('signup-phone').value;
       const username = document.getElementById('signup-username').value;
       const password = document.getElementById('signup-password').value;
 
-      if (!username || !password) {
-        alert('Please fill in all fields');
+      if (!firstname || !lastname || !email || !phone || !username || !password) {
+        showModal('Error', 'Please fill in all fields', 'error');
         return;
       }
 
-      localStorage.setItem(username, password);
-      alert('Account created successfully!');
-      window.location.href = 'signin.html';
+      if (localStorage.getItem(username)) {
+        showModal('Error', 'Username already exists', 'error');
+        return;
+      }
+
+      localStorage.setItem(username, JSON.stringify({ firstname, lastname, email, phone, password }));
+      const modal = document.getElementById('modal');
+      modal.dataset.redirect = 'signin.html';
+      showModal('Success', 'Account created successfully! Redirecting to sign in...');
     }
   </script>
 </body>

@@ -9,6 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body onload="checkAuthStatus()">
@@ -16,16 +17,8 @@
     <div class="logo">TripGenie</div>
     <nav>
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="dropdown">
-          <a href="#" class="auth-btn" onclick="toggleDropdown(event)">Account ▼</a>
-          <div class="dropdown-menu" id="dropdownMenu">
-            <a href="auth/signin.html">Sign In</a>
-            <a href="auth/signup.html">Sign Up</a>
-            <a href="#" onclick="logout()" id="logout-btn" style="display: none;">Logout</a>
-          </div>
-        </li>
+        <li><span id="userName" class="user-greeting"></span></li>
+        <li><a href="#" onclick="logout()" class="logout-link">Logout</a></li>
       </ul>
       <div class="hamburger" onclick="toggleMenu()">☰</div>
     </nav>
@@ -163,118 +156,9 @@
     </div>
   </div>
 
-  <script>
-    function toggleDropdown(event) {
-      event.preventDefault();
-      const dropdown = document.getElementById('dropdownMenu');
-      dropdown.classList.toggle('show');
-    }
-    function toggleMenu() {
-      document.querySelector('.nav-links').classList.toggle('show');
-    }
-
-    // Authentication Status Check
-    function checkAuthStatus() {
-      const currentUser = localStorage.getItem('currentUser');
-      const logoutBtn = document.getElementById('logout-btn');
-      if (currentUser) {
-        logoutBtn.style.display = 'block';
-      } else {
-        logoutBtn.style.display = 'none';
-      }
-    }
-
-    // Logout Function
-    function logout() {
-      localStorage.removeItem('currentUser');
-      alert('Logged out successfully');
-      window.location.reload();
-    }
-
-    function toggleChildAgeInputs() {
-      const childrenCount = document.querySelector('.children-input').value;
-      const childAgeContainer = document.getElementById('child-age-container');
-      if (childrenCount > 0) {
-        childAgeContainer.style.display = 'block';
-      } else {
-        childAgeContainer.style.display = 'none';
-      }
-    }
-
-    async function getSuggestions() {
-      const source = document.querySelector('.source-input').value;
-      const destination = document.querySelector('.destination-input').value;
-      const days = document.querySelector('.days-input').value;
-      const startDate = document.getElementById('start-date').value;
-      const adults = document.querySelector('.adults-input').value;
-      const children = document.querySelector('.children-input').value;
-      const childAges = document.getElementById('child-ages').value;
-
-      if (!source || !destination || !days || !startDate || !adults || (children > 0 && !childAges)) {
-        alert('Please fill in all fields to get suggestions!');
-        return;
-      }
-
-      const loadingModal = document.getElementById('loadingModal');
-      loadingModal.style.display = 'block';
-
-      // Function to update status
-      function updateStatus(stage, isComplete = false) {
-        const statusElement = document.getElementById(`${stage}Status`);
-        if (statusElement) {
-          statusElement.classList.toggle('completed', isComplete);
-          if (isComplete) {
-            statusElement.querySelector('.status-icon').textContent += ' ✓';
-          }
-        }
-      }
-
-      const tripData = {
-        source,
-        destination,
-        days,
-        startDate,
-        adults,
-        children,
-        childAges: children > 0 ? childAges.split(',').map(age => age.trim()) : []
-      };
-
-      try {
-        // Show initial loading state
-        updateStatus('flight');
-
-        const response = await fetch('http://localhost:5000/api/trip', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(tripData)
-        });
-
-        // Simulate status updates (you can modify timing based on actual backend progress)
-        setTimeout(() => updateStatus('flight', true), 1000);
-        setTimeout(() => updateStatus('hotel', true), 2000);
-        setTimeout(() => updateStatus('weather', true), 3000);
-        setTimeout(() => updateStatus('activity', true), 4000);
-
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem('itineraryData', JSON.stringify(data));
-          setTimeout(() => {
-            window.location.href = 'itinerary.html';
-          }, 5000); // Give time to see all completion marks
-        } else {
-          loadingModal.style.display = 'none';
-          alert('Failed to fetch trip suggestions. Please try again.');
-        }
-      } catch (error) {
-        loadingModal.style.display = 'none';
-        console.error('Error fetching trip suggestions:', error);
-        alert('An error occurred. Please try again.');
-      }
-    }
-  </script>
-
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/modal.js"></script>
 </body>
 
 </html>

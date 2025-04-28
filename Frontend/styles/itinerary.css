@@ -1,0 +1,288 @@
+:root {
+    --primary-color: #43e97b;
+    --secondary-color: #38f9d7;
+    --radius-md: 8px;
+}
+
+.flights-container {
+    padding: 1.5rem;
+}
+
+.flight-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(67, 97, 238, 0.1);
+}
+
+.flight-timeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.flight-timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+.departure,
+.arrival {
+    text-align: center;
+    z-index: 2;
+    background: white;
+    padding: 0.5rem;
+}
+
+.departure time,
+.arrival time {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2b2d42;
+    display: block;
+}
+
+.departure p,
+.arrival p {
+    font-size: 0.9rem;
+    color: #555b6e;
+    margin: 0.3rem 0;
+}
+
+.flight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.airline {
+    font-weight: 500;
+    color: #2b2d42;
+}
+
+.price {
+    color: #43e97b;
+    font-weight: 600;
+}
+
+.duration {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f8f9fa;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #555b6e;
+    border: 1px solid #e0e0e0;
+}
+
+.section {
+    margin: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-box {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.trip-summary {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.flight-detail {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #43e97b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.itinerary-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.accordion-item {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-5px);
+}
+
+.accordion-header {
+    padding: 1.5rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: white;
+}
+
+.accordion-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.accordion-content {
+    display: none;
+    background: #ffffff;
+    padding: 2rem;
+}
+
+.accordion-content.active {
+    display: block;
+}
+
+.flight-details {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.hotel-details {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+}
+
+.weather-details {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.activities-details {
+    background: linear-gradient(135deg, #ffd300 0%, #ffbb00 100%);
+}
+
+.detail-card {
+    background: #f8faff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #43e97b;
+    transition: transform 0.3s ease;
+}
+
+.detail-card:hover {
+    transform: translateX(10px);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #2b2d42;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.accordion-header.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+/* Info styling */
+.info-grid {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: #4a4a4a;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #2b2d42;
+}
+
+/* Navbar specific styles */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.trip-info {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.user-greeting {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.trip-summary {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
+}
+
+.logout-link {
+    color: white;
+    padding: 0.5rem 1rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.logout-link:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+/* Content styling for each section */
+.flight-detail,
+.hotel-detail,
+.weather-detail,
+.activity-detail {
+    background: #f8faff;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

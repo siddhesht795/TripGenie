@@ -199,7 +199,7 @@ if (
                             <h3>${hotel.name || ''}</h3>
                             <div class="rating">${hotel.rating ? '⭐'.repeat(hotel.rating) : ''}</div>
                             <p class="address">${hotel.address || ''}</p>
-                            <p class="price">${hotel.price ? '$' + hotel.price + '/night' : ''}</p>
+                            <p class="price">${hotel.price ? '' + hotel.price + '/night' : ''}</p>
                         </div>
                     </div>
                 `).join('');

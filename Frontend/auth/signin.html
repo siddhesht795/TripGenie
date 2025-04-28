@@ -4,74 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign In - TripGenie</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: #ffffff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      width: 350px;
-      text-align: center;
-    }
-
-    h2 {
-      margin-bottom: 25px;
-      color: #333;
-    }
-
-    input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    button {
-      width: 95%;
-      padding: 12px;
-      background-color: #4facfe;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #00c6fb;
-    }
-
-    .link {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .link a {
-      color: #4facfe;
-      text-decoration: none;
-    }
-
-    .link a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/signin.css">
+  <link rel="stylesheet" href="../styles/auth.css">
 </head>
 
 <body>
+  <script>
+    // Redirect if already logged in
+    window.onload = function () {
+      const currentUser = localStorage.getItem('currentUser');
+      if (currentUser) {
+        window.location.href = '../index.html';
+      }
+    }
+  </script>
   <div class="container">
     <h2>Sign In</h2>
     <input type="text" id="signin-username" placeholder="Username">
@@ -83,21 +29,61 @@
     </div>
   </div>
 
+  <!-- Add Modal HTML -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modal-title"></h3>
+      <p class="modal-message" id="modal-message"></p>
+      <button class="modal-button" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
   <script>
+    function showModal(title, message, type = 'success') {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modal.classList.add('show', type);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show', 'success', 'error');
+      if (modal.dataset.redirect) {
+        window.location.href = modal.dataset.redirect;
+      }
+    }
+
     function signin() {
       const username = document.getElementById('signin-username').value;
       const password = document.getElementById('signin-password').value;
       const storedPassword = localStorage.getItem(username);
 
+      if (!username || !password) {
+        showModal('Error', 'Please fill in all fields', 'error');
+        return;
+      }
+
+      if (!storedPassword) {
+        showModal('Error', 'User not found', 'error');
+        return;
+      }
+
       if (storedPassword === password) {
         localStorage.setItem('currentUser', username);
-        alert('Sign in successful!');
-        window.location.href = '../index.html';
+        const modal = document.getElementById('modal');
+        modal.dataset.redirect = '../index.html';
+        showModal('Success', 'Sign in successful! Redirecting to home...');
       } else {
-        alert('Invalid credentials!');
+        showModal('Error', 'Invalid credentials', 'error');
       }
     }
   </script>
+  <script src="../scripts/modal.js"></script>
+  <script src="../scripts/auth.js"></script>
 </body>
 
 </html>

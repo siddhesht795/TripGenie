@@ -1,0 +1,293 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 380px;
+    max-width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+input {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+button {
+    width: 95%;
+    padding: 12px;
+    background-color: #43e97b;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #38f9d7;
+}
+
+.link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.link a {
+    color: #43e97b;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-title {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.modal-message {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modal-button {
+    padding: 0.75rem 2rem;
+    background-color: #43e97b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #38f9d7;
+}
+
+.modal.success .modal-title {
+    color: #43e97b;
+}
+
+.modal.error .modal-title {
+    color: #ff4b4b;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    width: 90%;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.form-group.half {
+    width: calc(50% - 5px);
+    /* Accounting for the gap */
+}
+
+.form-group input {
+    width: 80%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+    margin: 4px 0px;
+}
+
+.form-group input:focus {
+    border-color: #43e97b;
+    box-shadow: 0 0 0 3px rgba(67, 233, 123, 0.1);
+}
+
+.status-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(67, 97, 238, 0.05);
+    transition: all 0.3s ease;
+}
+
+.status-item.completed {
+    background: rgba(67, 233, 123, 0.1);
+    color: #43e97b;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #43e97b;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.pdf-option {
+    margin: 1rem 0;
+    padding: 0.8rem 1.2rem;
+    background: rgba(67, 97, 238, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.pdf-option:hover {
+    background: rgba(67, 97, 238, 0.15);
+}
+
+.pdf-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.pdf-option label {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+#loadingModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#loadingModal.show {
+    display: flex;
+    opacity: 1;
+}
+
+#loadingModal .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.status-container {
+    margin-top: 2rem;
+}
+
+.trip-info {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: white;
+    padding: 0 2rem;
+}
+
+.user-greeting {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.trip-details {
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.trip-details span {
+    font-weight: 500;
+}

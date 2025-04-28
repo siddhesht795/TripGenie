@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Itinerary - TripGenie</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="itinerary.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -17,7 +18,6 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -26,85 +26,47 @@
         <h1>Your Travel Itinerary</h1>
 
         <!-- Flight Details -->
-        <div class="accordion-item"
-            style="border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(67,97,238,0.08); margin-bottom: 1.5rem;">
-            <div class="accordion-header" onclick="toggleAccordion(this)"
-                style="background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%); color: #fff; padding: 1.2rem 1.5rem; font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
-                <h2
-                    style="margin: 0; font-size: 1.2rem; letter-spacing: 0.5px; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="font-size: 1.5rem;">✈️</span> Flight Details
-                </h2>
-                <span class="toggle-icon" style="font-size: 1.3rem; transition: transform 0.2s;">▼</span>
+        <div class="accordion-item">
+            <div class="accordion-header flight-header" onclick="toggleAccordion(this)">
+                <h2><span>✈️</span> Flight Details</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <div class="accordion-content" id="flightDetails"
-                style="background: #f8faff; padding: 1.5rem 1.5rem 1.2rem 1.5rem; border-top: 1px solid #e3e8f0;">
-                <div class="flights-container"
-                    style="font-size: 1.08rem; color: #2b2d42; line-height: 1.7; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(67,97,238,0.06); padding: 1.2rem 1rem;">
-                </div>
+            <div class="accordion-content" id="flightDetails">
+                <div class="flights-container"></div>
             </div>
         </div>
 
         <!-- Hotel Details -->
-        <div class="accordion-item"
-            style="border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(67,97,238,0.08); margin-bottom: 1.5rem;">
-            <div class="accordion-header" onclick="toggleAccordion(this)"
-                style="background: linear-gradient(90deg, #ff7b54 0%, #e86a45 100%); color: #fff; padding: 1.2rem 1.5rem; font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
-                <h2
-                    style="margin: 0; font-size: 1.2rem; letter-spacing: 0.5px; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="font-size: 1.5rem;">🏨</span> Hotel Details
-                </h2>
-                <span class="toggle-icon" style="font-size: 1.3rem; transition: transform 0.2s;">▼</span>
+        <div class="accordion-item">
+            <div class="accordion-header hotel-header" onclick="toggleAccordion(this)">
+                <h2><span>🏨</span> Hotel Details</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <div class="accordion-content" id="hotelDetailsContent"
-                style="background: #f8faff; padding: 1.5rem 1.5rem 1.2rem 1.5rem; border-top: 1px solid #e3e8f0;">
-                <div class="hotels-container"
-                    style="font-size: 1.08rem; color: #2b2d42; line-height: 1.7; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(67,97,238,0.06); padding: 1.2rem 1rem;">
-                </div>
+            <div class="accordion-content" id="hotelDetailsContent">
+                <div class="hotels-container"></div>
             </div>
         </div>
 
         <!-- Weather Forecast -->
-        <div class="accordion-item"
-            style="border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(67,97,238,0.08); margin-bottom: 1.5rem;">
-            <div class="accordion-header" onclick="toggleAccordion(this)"
-                style="background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 100%); color: #fff; padding: 1.2rem 1.5rem; font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
-                <h2
-                    style="margin: 0; font-size: 1.2rem; letter-spacing: 0.5px; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="font-size: 1.5rem;">🌤️</span> Weather Forecast
-                </h2>
-                <span class="toggle-icon" style="font-size: 1.3rem; transition: transform 0.2s;">▼</span>
+        <div class="accordion-item">
+            <div class="accordion-header weather-header" onclick="toggleAccordion(this)">
+                <h2><span>🌤️</span> Weather Forecast</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <div class="accordion-content" id="weatherDetailsContent"
-                style="background: #f8faff; padding: 1.5rem 1.5rem 1.2rem 1.5rem; border-top: 1px solid #e3e8f0;">
-                <div class="weather-summary"
-                    style="font-size: 1.08rem; color: #2b2d42; line-height: 1.7; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(67,97,238,0.06); padding: 1.2rem 1rem;">
-                </div>
+            <div class="accordion-content" id="weatherDetailsContent">
+                <div class="weather-summary"></div>
             </div>
         </div>
 
         <!-- Activities -->
-        <div class="accordion-item"
-            style="border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(67,97,238,0.08); margin-bottom: 1.5rem;">
-            <div class="accordion-header" onclick="toggleAccordion(this)"
-                style="background: linear-gradient(90deg, #fbbf24 0%, #fbbf24 100%); color: #fff; padding: 1.2rem 1.5rem; font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
-                <h2
-                    style="margin: 0; font-size: 1.2rem; letter-spacing: 0.5px; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="font-size: 1.5rem;">📅</span> Activities
-                </h2>
-                <span class="toggle-icon" style="font-size: 1.3rem; transition: transform 0.2s;">▼</span>
+        <div class="accordion-item">
+            <div class="accordion-header activities-header" onclick="toggleAccordion(this)">
+                <h2><span>📅</span> Activities</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <div class="accordion-content" id="activitiesDetailsContent"
-                style="background: #f8faff; padding: 1.5rem 1.5rem 1.2rem 1.5rem; border-top: 1px solid #e3e8f0;">
-                <ul class="activities-list"
-                    style="font-size: 1.08rem; color: #2b2d42; line-height: 1.7; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(67,97,238,0.06); padding: 1.2rem 1rem;">
-                </ul>
+            <div class="accordion-content" id="activitiesDetailsContent">
+                <ul class="activities-list"></ul>
             </div>
-        </div>
-
-        <div style="text-align:center; margin: 2rem 0;">
-            <button id="downloadPdfBtn" class="primary-button" style="font-size:1.1rem; padding: 0.8rem 2.5rem;">
-                ⬇️ Download PDF
-            </button>
         </div>
     </main>
 
