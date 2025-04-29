@@ -130,6 +130,7 @@ if (
                 });
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data);
                     localStorage.setItem('itineraryData', JSON.stringify(data));
                     if (data.pdf_filename) {
                         localStorage.setItem('pdf_filename', data.pdf_filename);
@@ -143,6 +144,7 @@ if (
         await fetchItineraryDataIfNeeded();
 
         const itineraryData = JSON.parse(localStorage.getItem('itineraryData'));
+        console.log('Itinerary Data:', itineraryData);
         if (!itineraryData) {
             window.location.href = 'index.html';
             return;
@@ -155,31 +157,24 @@ if (
                 flightsContainer.innerHTML = itineraryData.flights.map(flight => `
                     <div class="flight-card">
                         <div class="flight-header">
-                            ${flight.airline ? `<span class="airline">${flight.airline}</span>` : ''}
-                            ${flight.price ? `<span class="price">$${flight.price}</span>` : ''}
+                            ${flight.flights[0].airline ? `<span class="airline"><strong>Airline:</strong> ${flight.flights[0].airline}</span>` : '<span class="airline"><strong>Airline:</strong> Not Available</span>'}
                         </div>
-                        <div class="flight-timeline">
-                            <div class="departure">
-                                ${flight.departureTime ? `<time>${flight.departureTime}</time>` : ''}
-                                ${flight.departure ? `<p>${flight.departure}</p>` : ''}
-                            </div>
-                            <div class="flight-path">
-                                ${flight.duration ? `<div class="duration">${flight.duration}</div>` : ''}
-                                ${flight.layovers?.length ? `
-                                    <div class="layovers">
-                                        ${flight.layovers.map(layover => `
-                                            <div class="layover">
-                                                ${layover.city ? `<span class="layover-city">${layover.city}</span>` : ''}
-                                                ${layover.duration ? `<span class="layover-duration">${layover.duration}</span>` : ''}
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                ` : '<div class="direct-flight">Direct Flight</div>'}
-                            </div>
-                            <div class="arrival">
-                                ${flight.arrivalTime ? `<time>${flight.arrivalTime}</time>` : ''}
-                                ${flight.arrival ? `<p>${flight.arrival}</p>` : ''}
-                            </div>
+                        <div class="flight-details">
+                            ${flight.flights[0].duration ? `<p><strong>Duration:</strong> ${flight.flights[0].duration}</p>` : ''}
+                            ${flight.price ? `<p><strong>Cost:</strong> ₹${flight.price}</p>` : ''}
+                            ${flight.flights[0].departure_airport ? `<p><strong>Departure Airport:</strong> ${flight.flights[0].departure_airport}</p>` : ''}
+                            ${flight.flights[flight.flights.length - 1].arrival_airport ? `<p><strong>Arrival Airport:</strong> ${flight.flights[flight.flights.length - 1].arrival_airport}</p>` : ''}
+                            ${flight.layovers?.length ? `
+                                <br><p><strong>Layovers:</strong></p>
+                                <ul class="layovers">
+                                    ${flight.layovers.map(layover => `
+                                        <li style="list-style-type: none">
+                                            ${layover.name ? `<span><strong>Airport:</strong> ${layover.name}</span><br>` : ''}
+                                            ${layover.duration ? `<span><strong>Duration:</strong> ${layover.duration}</span>` : ''}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            ` : '<p><strong>Layovers:</strong> None</p>'}
                         </div>
                     </div>
                 `).join('');

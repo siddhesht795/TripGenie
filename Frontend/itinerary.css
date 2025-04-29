@@ -58,6 +58,12 @@
     background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
 }
 
+.flight-card>.flight-header {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .hotel-header {
     background: linear-gradient(90deg, #ff7b54 0%, #e86a45 100%);
 }
