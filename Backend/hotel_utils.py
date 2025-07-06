@@ -15,7 +15,7 @@ def get_hotel_details(destination_city, no_adults="2", no_children="0", children
         "check_out_date": check_out_date,
         "adults": no_adults,
         "children": no_children,
-        "children_ages": children_ages,  # Passing children ages as a comma-separated string
+        "children_ages": children_ages,
         "currency": "INR",
         "gl": "in",
         "hl": "en",
