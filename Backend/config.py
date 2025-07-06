@@ -1,4 +1,8 @@
-SERP_API_KEY = "0e27364080ed96f436c06d80e7e91579c92b742e89a52309faf812e76e0143bd"
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+SERP_API_KEY = os.getenv("SERP_API_KEY")
 HF_API_KEY = "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"
 AMADEUS_API_KEY = "9a5A2PE5nFlGwPjqn5GmMIafIbHVhzd3"
 AMADEUS_API_SECRET = "vCEv5BSuMMfcvi9A"
